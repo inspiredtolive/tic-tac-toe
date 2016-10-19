@@ -43,25 +43,26 @@ const won = (row, col, mark) => {
   return false;
 };
 
-console.log('Turn:', turn);
 printBoard();
 
 const promptMove = () => {
   prompt.getAsync(['row', 'col'])
   .then(({row, col}) => {
+    console.log('\033[2J');
+    console.log('Turn:', turn);
     console.log('row: ' + row);
     console.log('column: ' + col);
 
     let mark = turn === 'Player 1' ? 'X' : 'O';
     board[row][col] = mark;
 
-    toggleTurn();
     printBoard();
     if (won(row, col, mark)) {
       console.log(turn + ' won!');
     } else {
       promptMove();
     }
+    toggleTurn();
   })
   .catch(error => {
     console.log('Error:', error);
